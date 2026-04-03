@@ -1,0 +1,450 @@
+@prefix : <http://www.example.org/music#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Instrument a owl:Class ;
+    rdfs:label "Instrument" .
+
+:playsInstrument a owl:ObjectProperty ;
+    rdfs:label "plays instrument" ;
+    rdfs:domain :Person ;
+    rdfs:range :Instrument .
+
+:Band a owl:Class ;
+    rdfs:label "Band" .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Role a owl:Class ;
+    rdfs:label "Role" .
+
+:Membership a owl:Class ;
+    rdfs:label "Band membership" .
+
+:hasMembership a owl:ObjectProperty ;
+    rdfs:label "has membership" ;
+    rdfs:domain :Band ;
+    rdfs:range :Membership .
+
+:membershipBand a owl:ObjectProperty ;
+    rdfs:label "membership band" ;
+    rdfs:domain :Membership ;
+    rdfs:range :Band .
+
+:membershipPerson a owl:ObjectProperty ;
+    rdfs:label "membership person" ;
+    rdfs:domain :Membership ;
+    rdfs:range :Person .
+
+:membershipRole a owl:ObjectProperty ;
+    rdfs:label "membership role" ;
+    rdfs:domain :Membership ;
+    rdfs:range :Role .
+
+:membershipStart a owl:DatatypeProperty ;
+    rdfs:label "membership start date" ;
+    rdfs:domain :Membership ;
+    rdfs:range xsd:dateTime .
+
+:membershipEnd a owl:DatatypeProperty ;
+    rdfs:label "membership end date" ;
+    rdfs:domain :Membership ;
+    rdfs:range xsd:dateTime .
+
+:hasMember a owl:ObjectProperty ;
+    rdfs:label "has member" ;
+    rdfs:domain :Band ;
+    rdfs:range :Person ;
+    owl:propertyChainAxiom ( :hasMembership :membershipPerson ) .
+
+:Person a owl:Class ;
+    rdfs:label "Person" .
+
+:Band a owl:Class ;
+    rdfs:label "Band" .
+
+:Role a owl:Class ;
+    rdfs:label "Role" .
+
+:Membership a owl:Class ;
+    rdfs:label "Membership" .
+
+:TimeInstant a owl:Class ;
+    rdfs:label "Time instant" .
+
+:hasMembership a owl:ObjectProperty ;
+    rdfs:label "has membership" ;
+    rdfs:domain :Band ;
+    rdfs:range :Membership .
+
+:memberPerson a owl:ObjectProperty ;
+    rdfs:label "member person" ;
+    rdfs:domain :Membership ;
+    rdfs:range :Person .
+
+:memberRole a owl:ObjectProperty ;
+    rdfs:label "member role" ;
+    rdfs:domain :Membership ;
+    rdfs:range :Role .
+
+:memberTime a owl:DatatypeProperty ;
+    rdfs:label "member time" ;
+    rdfs:domain :Membership ;
+    rdfs:range xsd:dateTime .
+
+:Album a owl:Class ;
+    rdfs:label "Album" .
+
+:AlbumRecording a owl:Class ;
+    rdfs:label "Album Recording" .
+
+:TimeInterval a owl:Class ;
+    rdfs:label "Time Interval" .
+
+:hasRecording a owl:ObjectProperty ;
+    rdfs:label "has recording" ;
+    rdfs:domain :Album ;
+    rdfs:range :AlbumRecording .
+
+:recordedDuring a owl:ObjectProperty ;
+    rdfs:label "recorded during" ;
+    rdfs:domain :AlbumRecording ;
+    rdfs:range :TimeInterval .
+
+:intervalStart a owl:DatatypeProperty ;
+    rdfs:label "interval start" ;
+    rdfs:domain :TimeInterval ;
+    rdfs:range xsd:dateTime .
+
+:intervalEnd a owl:DatatypeProperty ;
+    rdfs:label "interval end" ;
+    rdfs:domain :TimeInterval ;
+    rdfs:range xsd:dateTime .
+
+:Album rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :hasRecording ;
+    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :AlbumRecording
+] .
+
+:Album a owl:Class ;
+    rdfs:label "Album" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasTrack ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Track
+    ] .
+
+:Track a owl:Class ;
+    rdfs:label "Track" .
+
+:hasTrack a owl:ObjectProperty ;
+    rdfs:label "has track" ;
+    rdfs:domain :Album ;
+    rdfs:range :Track .
+
+:Album a owl:Class ;
+    rdfs:label "Album" .
+
+:hasReleaseDate a owl:DatatypeProperty ;
+    rdfs:label "has release date" ;
+    rdfs:domain :Album ;
+    rdfs:range xsd:date .
+
+:MusicOntology a owl:Ontology .
+
+:Track a owl:Class ;
+    rdfs:label "Track" .
+
+:Song a owl:Class ;
+    rdfs:label "Song" .
+
+:recordedSong a owl:ObjectProperty ;
+    rdfs:label "recorded song" ;
+    rdfs:domain :Track ;
+    rdfs:range :Song .
+
+:Song a owl:Class ;
+    rdfs:label "Song" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasComposition ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :SongComposition
+    ] .
+
+:SongComposition a owl:Class ;
+    rdfs:label "Song Composition Event" .
+
+:hasComposition a owl:ObjectProperty ;
+    rdfs:label "has composition" ;
+    rdfs:domain :Song ;
+    rdfs:range :SongComposition .
+
+:compositionDate a owl:DatatypeProperty ;
+    rdfs:label "composition date" ;
+    rdfs:domain :SongComposition ;
+    rdfs:range xsd:dateTime .
+
+:Critic a owl:Class ;
+    rdfs:label "Critic" .
+
+:Record a owl:Class ;
+    rdfs:label "Record" .
+
+:Review a owl:Class ;
+    rdfs:label "Review" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            [ a owl:Restriction ;
+              owl:onProperty :hasCritic ;
+              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+              owl:onClass :Critic
+            ]
+            [ a owl:Restriction ;
+              owl:onProperty :aboutRecord ;
+              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+              owl:onClass :Record
+            ]
+        )
+    ] .
+
+:hasCritic a owl:ObjectProperty ;
+    rdfs:label "has critic" ;
+    rdfs:domain :Review ;
+    rdfs:range :Critic .
+
+:aboutRecord a owl:ObjectProperty ;
+    rdfs:label "about record" ;
+    rdfs:domain :Review ;
+    rdfs:range :Record .
+
+:says a owl:ObjectProperty ;
+    rdfs:label "says" ;
+    rdfs:domain :Critic ;
+    rdfs:range :Review .
+
+:reviewText a owl:DatatypeProperty ;
+    rdfs:label "review text" ;
+    rdfs:domain :Review ;
+    rdfs:range xsd:string .
+
+:Performance a owl:Class ;
+    rdfs:label "Performance" .
+
+:Band a owl:Class ;
+    rdfs:label "Band" .
+
+:Venue a owl:Class ;
+    rdfs:label "Venue" .
+
+:City a owl:Class ;
+    rdfs:label "City" .
+
+:Region a owl:Class ;
+    rdfs:label "Region" .
+
+:Country a owl:Class ;
+    rdfs:label "Country" .
+
+:performedBy a owl:ObjectProperty ;
+    rdfs:label "performed by" ;
+    rdfs:domain :Performance ;
+    rdfs:range :Band .
+
+:performedAtVenue a owl:ObjectProperty ;
+    rdfs:label "performed at venue" ;
+    rdfs:domain :Performance ;
+    rdfs:range :Venue .
+
+:venueInCity a owl:ObjectProperty ;
+    rdfs:label "venue in city" ;
+    rdfs:domain :Venue ;
+    rdfs:range :City .
+
+:cityInRegion a owl:ObjectProperty ;
+    rdfs:label "city in region" ;
+    rdfs:domain :City ;
+    rdfs:range :Region .
+
+:regionInCountry a owl:ObjectProperty ;
+    rdfs:label "region in country" ;
+    rdfs:domain :Region ;
+    rdfs:range :Country .
+
+:hasDate a owl:DatatypeProperty ;
+    rdfs:label "date" ;
+    rdfs:domain :Performance ;
+    rdfs:range xsd:dateTime .
+
+:PerformanceWithDate a owl:Class ;
+    rdfs:label "Performance with date" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :Performance
+            [
+                a owl:Restriction ;
+                owl:onProperty :hasDate ;
+                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onDataRange xsd:dateTime
+            ]
+        )
+    ] .
+
+:Song a owl:Class ;
+    rdfs:label "Song" .
+
+:Performance a owl:Class ;
+    rdfs:label "Performance" .
+
+:playsSong a owl:ObjectProperty ;
+    rdfs:label "plays song" ;
+    rdfs:domain :Performance ;
+    rdfs:range :Song .
+
+:PerformanceWithSongs a owl:Class ;
+    rdfs:label "Performance with at least one song played" ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf (
+            :Performance
+            [
+                a owl:Restriction ;
+                owl:onProperty :playsSong ;
+                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass :Song
+            ]
+        )
+    ] .
+
+:Performance a owl:Class ;
+    rdfs:label "Performance" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasVenue ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Venue
+    ] .
+
+:Venue a owl:Class ;
+    rdfs:label "Venue" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :venueInCity ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :City
+    ] .
+
+:City a owl:Class ;
+    rdfs:label "City" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :cityInRegion ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Region
+    ] .
+
+:Region a owl:Class ;
+    rdfs:label "Region" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :regionInCountry ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Country
+    ] .
+
+:Country a owl:Class ;
+    rdfs:label "Country" .
+
+:hasVenue a owl:ObjectProperty ;
+    rdfs:label "has venue" ;
+    rdfs:domain :Performance ;
+    rdfs:range :Venue .
+
+:venueInCity a owl:ObjectProperty ;
+    rdfs:label "venue in city" ;
+    rdfs:domain :Venue ;
+    rdfs:range :City .
+
+:cityInRegion a owl:ObjectProperty ;
+    rdfs:label "city in region" ;
+    rdfs:domain :City ;
+    rdfs:range :Region .
+
+:regionInCountry a owl:ObjectProperty ;
+    rdfs:label "region in country" ;
+    rdfs:domain :Region ;
+    rdfs:range :Country .
+
+:City a owl:Class ;
+    rdfs:label "City" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :locatedInRegion ;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onClass :Region
+    ] .
+
+:Region a owl:Class ;
+    rdfs:label "Region" .
+
+:Country a owl:Class ;
+    rdfs:label "Country" .
+
+:locatedInRegion a owl:ObjectProperty ;
+    rdfs:label "located in region" ;
+    rdfs:domain :City ;
+    rdfs:range :Region .
+
+:locatedInCountry a owl:ObjectProperty ;
+    rdfs:label "located in country" ;
+    rdfs:domain :Region ;
+    rdfs:range :Country .
+
+:Country a owl:Class ;
+    rdfs:label "Country" .
+
+:Region a owl:Class ;
+    rdfs:label "Region" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :locatedInCountry ;
+        owl:someValuesFrom :Country
+    ] .
+
+:locatedInCountry a owl:ObjectProperty ;
+    rdfs:label "located in country" ;
+    rdfs:domain :Region ;
+    rdfs:range :Country .
+
+:Record a owl:Class ;
+    rdfs:label "Record"@en .
+
+:Track a owl:Class ;
+    rdfs:label "Track"@en .
+
+:hasTrack a owl:ObjectProperty ;
+    rdfs:label "has track"@en ;
+    rdfs:domain :Record ;
+    rdfs:range :Track .
+
+:Record rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :hasTrack ;
+    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :Track
+] .
