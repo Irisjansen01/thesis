@@ -1,0 +1,141 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.org/music#> .
+
+ex: a owl:Ontology ;
+    rdfs:label "Music Production Ontology Module" .
+
+# Existing Place hierarchy
+ex:Place a owl:Class ;
+    rdfs:label "Place" .
+
+ex:City a owl:Class ;
+    rdfs:label "City" ;
+    rdfs:subClassOf ex:Place ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf ( ex:City
+            [ a owl:Restriction ;
+              owl:onProperty ex:locatedIn ;
+              owl:cardinality "1"^^xsd:nonNegativeInteger ] )
+    ] ;
+    owl:disjointWith ex:Region , ex:Country .
+
+ex:Region a owl:Class ;
+    rdfs:label "Region" ;
+    rdfs:subClassOf ex:Place ,
+        [ a owl:Restriction ;
+          owl:onProperty ex:regionInCountry ;
+          owl:someValuesFrom ex:Country ] ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf ( ex:Region
+            [ a owl:Restriction ;
+              owl:onProperty ex:regionInCountry ;
+              owl:cardinality "1"^^xsd:nonNegativeInteger ] )
+    ] ;
+    owl:disjointWith ex:City , ex:Country .
+
+ex:Country a owl:Class ;
+    rdfs:label "Country" ;
+    rdfs:subClassOf ex:Place ,
+        [ a owl:Restriction ;
+          owl:onProperty ex:hasRegion ;
+          owl:someValuesFrom ex:Region ] ;
+    owl:disjointWith ex:City , ex:Region .
+
+ex:locatedIn a owl:ObjectProperty ;
+    rdfs:label "located in" ;
+    rdfs:domain ex:City ;
+    rdfs:range ex:Region ;
+    owl:inverseOf ex:hasCity .
+
+ex:hasCity a owl:ObjectProperty ;
+    rdfs:label "has city" ;
+    rdfs:domain ex:Region ;
+    rdfs:range ex:City ;
+    owl:inverseOf ex:locatedIn .
+
+ex:regionInCountry a owl:ObjectProperty ;
+    rdfs:label "region in country" ;
+    rdfs:domain ex:Region ;
+    rdfs:range ex:Country ;
+    owl:inverseOf ex:hasRegion .
+
+ex:hasRegion a owl:ObjectProperty ;
+    rdfs:label "has region" ;
+    rdfs:domain ex:Country ;
+    rdfs:range ex:Region ;
+    owl:inverseOf ex:regionInCountry .
+
+ex:cityName a owl:DatatypeProperty ;
+    rdfs:label "city name" ;
+    rdfs:domain ex:City ;
+    rdfs:range xsd:string .
+
+ex:regionName a owl:DatatypeProperty ;
+    rdfs:label "region name" ;
+    rdfs:domain ex:Region ;
+    rdfs:range xsd:string .
+
+ex:countryName a owl:DatatypeProperty ;
+    rdfs:label "country name" ;
+    rdfs:domain ex:Country ;
+    rdfs:range xsd:string .
+
+# Music production classes
+ex:Record a owl:Class ;
+    rdfs:label "Record" ;
+    owl:disjointWith ex:Track ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty ex:hasTrack ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+ex:Album a owl:Class ;
+    rdfs:label "Album" ;
+    rdfs:subClassOf ex:Record .
+
+ex:Single a owl:Class ;
+    rdfs:label "Single" ;
+    rdfs:subClassOf ex:Record .
+
+ex:Track a owl:Class ;
+    rdfs:label "Track" .
+
+# Object properties linking records and tracks
+ex:hasTrack a owl:ObjectProperty ;
+    rdfs:label "has track" ;
+    rdfs:domain ex:Record ;
+    rdfs:range ex:Track ;
+    owl:inverseOf ex:isTrackOf .
+
+ex:isTrackOf a owl:ObjectProperty ;
+    rdfs:label "is track of" ;
+    rdfs:domain ex:Track ;
+    rdfs:range ex:Record ;
+    owl:inverseOf ex:hasTrack .
+
+# Datatype properties for music entities
+ex:recordTitle a owl:DatatypeProperty ;
+    rdfs:label "record title" ;
+    rdfs:domain ex:Record ;
+    rdfs:range xsd:string .
+
+ex:trackTitle a owl:DatatypeProperty ;
+    rdfs:label "track title" ;
+    rdfs:domain ex:Track ;
+    rdfs:range xsd:string .
+
+ex:releaseDate a owl:DatatypeProperty ;
+    rdfs:label "release date" ;
+    rdfs:domain ex:Record ;
+    rdfs:range xsd:date .
+
+ex:compositionDate a owl:DatatypeProperty ;
+    rdfs:label "composition date" ;
+    rdfs:domain ex:Track ;
+    rdfs:range xsd:date .
