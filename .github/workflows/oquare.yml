@@ -25,11 +25,11 @@ jobs:
         with:
           ontology-files: ontologies/music.ttl
           contents-folder: OQuaRE/music
-          reasoner: HERMIT
+          reasoner: ELK
 
       - name: Run OQuaRE - Pizza
         uses: tecnomod-um/oquare-metrics@v3.0
         with:
           ontology-files: ontologies/pizza.ttl
           contents-folder: OQuaRE/pizza
-          reasoner: HERMIT
+          reasoner: ELK
