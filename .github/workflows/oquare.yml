@@ -1,1 +1,35 @@
-name: OQuaRE Evaluationecho.echo on: [push, workflow_dispatch]echo.echo permissions:echo   contents: writeecho.echo jobs:echo   evaluate:echo     runs-on: ubuntu-latestecho     steps:echo       - uses: actions/checkout@v4echo.echo       - uses: actions/setup-java@v4echo         with:echo           distribution: 'temurin'echo           java-version: '17'echo.echo       - uses: actions/setup-python@v5echo         with:echo           python-version: '3.9'echo.echo       - name: Run OQuaRE - Musicecho         uses: tecnomod-um/oquare-metrics@v3.0echo         with:echo           ontology-files: ontologies/music.ttlecho           contents-folder: OQuaRE/musicecho           reasoner: HERMITecho.echo       - name: Run OQuaRE - Pizzaecho         uses: tecnomod-um/oquare-metrics@v3.0echo         with:echo           ontology-files: ontologies/pizza.ttlecho           contents-folder: OQuaRE/pizzaecho           reasoner: HERMIT
+name: OQuaRE Evaluation
+
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Run OQuaRE - Music
+        uses: tecnomod-um/oquare-metrics@v3.0
+        with:
+          ontology-files: ontologies/music.ttl
+          contents-folder: OQuaRE/music
+          reasoner: HERMIT
+
+      - name: Run OQuaRE - Pizza
+        uses: tecnomod-um/oquare-metrics@v3.0
+        with:
+          ontology-files: ontologies/pizza.ttl
+          contents-folder: OQuaRE/pizza
+          reasoner: HERMIT
