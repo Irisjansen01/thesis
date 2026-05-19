@@ -1,0 +1,29 @@
+name: OQuaRE Ontology Quality Evaluation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  oquare-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run OQuaRE Metrics
+        uses: tecnomod-um/oquare-metrics@v3.0
+        with:
+          ontology-folders: ontologies
+          reasoner: ELK
+          contents-folder: OQuaRE
+          model-plot: 'true'
+          characteristics-plot: 'true'
+          subcharacteristics-plot: 'true'
+          metrics-plot: 'true'
+          evolution-plot: 'true'
