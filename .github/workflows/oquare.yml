@@ -31,8 +31,9 @@ jobs:
           ontology-folders: ontologies
           reasoner: ELK
           contents-folder: OQuaRE
+          force-parse: 'true'
           model-plot: 'true'
-          feature-plot: 'true'
-          subfeature-plot: 'true'
-          metrics-plots: 'true'
+          characteristics-plot: 'true'
+          subcharacteristics-plot: 'true'
+          metrics-plot: 'true'
           evolution-plot: 'true'
