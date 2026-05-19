@@ -16,6 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
       - name: Run OQuaRE Metrics
         uses: tecnomod-um/oquare-metrics@v3.0
         with:
@@ -23,7 +32,7 @@ jobs:
           reasoner: ELK
           contents-folder: OQuaRE
           model-plot: 'true'
-          characteristics-plot: 'true'
-          subcharacteristics-plot: 'true'
-          metrics-plot: 'true'
+          feature-plot: 'true'
+          subfeature-plot: 'true'
+          metrics-plots: 'true'
           evolution-plot: 'true'
