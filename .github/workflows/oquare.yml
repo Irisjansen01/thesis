@@ -31,7 +31,7 @@ jobs:
           ontology-folders: ontologies
           reasoner: ELK
           contents-folder: OQuaRE
-          force-parse: 'true'
+          force-parse: 'ontologies/music.ttl ontologies/hospital.ttl'
           model-plot: 'true'
           characteristics-plot: 'true'
           subcharacteristics-plot: 'true'
