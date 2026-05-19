@@ -23,7 +23,8 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
+          cache: 'pip'
 
       - name: Run OQuaRE Metrics
         uses: tecnomod-um/oquare-metrics@v3.0
@@ -31,7 +32,6 @@ jobs:
           ontology-folders: ontologies
           reasoner: ELK
           contents-folder: OQuaRE
-          force-parse: 'ontologies/music.ttl ontologies/hospital.ttl'
           model-plot: 'true'
           characteristics-plot: 'true'
           subcharacteristics-plot: 'true'
